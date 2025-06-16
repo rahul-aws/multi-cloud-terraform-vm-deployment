@@ -1,0 +1,1 @@
+Custom vpc and vm deployment in gcp

@@ -1,0 +1,21 @@
+vpc:
+  vpc_name: "my-custom-vpc"
+  auto_subnet: false
+project: "burner-rahkumar49"
+subnet:
+  name: "private"
+  region: "us-central1"
+  ip_cidr_range: "10.2.0.0/28"
+  network: "my-custom-vpc"
+vm:
+  account_id: "custom-sa"
+  name: "test-vm"
+  zone: "us-central1-a"
+  tags: 
+   - "test"
+   - "ssh"
+firewall:
+  name: "ssh-custom"
+  source_ranges: ["35.235.240.0/20"]
+nat:
+  name: "test-custom"
