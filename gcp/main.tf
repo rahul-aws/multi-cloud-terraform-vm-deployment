@@ -1,8 +1,8 @@
 locals {
-  config_data = yamldecode(file("./vpc-vm.yaml"))
+  config_data = yamldecode(file("./config.yaml"))
 }
 module "vpc" {
-  source        = "./vpc"
+  source        = "./modules/vpc"
   vpc_name      = local.config_data.vpc.vpc_name
   project       = local.config_data.project
   auto_subnet   = local.config_data.vpc.auto_subnet
@@ -14,7 +14,7 @@ module "vpc" {
 }
 
 module "vm" {
-  source     = "./vm"
+  source     = "./modules/vm"
   account_id = local.config_data.vm.account_id
   myvm       = local.config_data.vm.name
   zone       = local.config_data.vm.zone
@@ -24,7 +24,7 @@ module "vm" {
 }
 
 module "firewall" {
-  source        = "./firewalls"
+  source        = "./modules/firewalls"
   name          = local.config_data.firewall.name
   network       = module.vpc.network_name
   target_tags   = local.config_data.vm.tags
@@ -33,7 +33,7 @@ module "firewall" {
 }
 
 module "ngw" {
-  source  = "./nat"
+  source  = "./modules/nat"
   name    = local.config_data.nat.name
   network = module.vpc.network_name
 
